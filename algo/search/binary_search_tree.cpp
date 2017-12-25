@@ -47,19 +47,37 @@ void inseart(Node* root, int val) {
      }
 }
 
-void tree_delete(Node* root, int val) {
-     Node* p = NULL;
-     if(search(root, val, &p)) {
-        if(p->left == NULL && p->right == NULL) {
-             
-        }
-        else if (p->left == NULL || p->right == NULL) {
+void delete_node(Node*& p) {
+     cout << "delete Node:" << p->val << endl;
+     Node* q = p;
+     if (!p->left) {
+	p = p->left;
+	delete q;
+     } else if(!p->right)  {
+	p = p->right;
+	delete q;
+     } 
+     else {
+      Node* s = p->left;
+      while(s->right) {
+	      s = s->right;
+      }
+      s->right = p->right;
+      p = p->left;
+     }
+}
 
+void tree_delete(Node*& root, int val) {
+     if(root) {
+        if(root-> val == val) {
+             delete_node(root);
+        }
+        else if (root-> val < val) {
+             tree_delete(root->left, val);
         }
         else {
-
+             tree_delete(root->right, val);
         }
-        cout << p->val << endl;
      }
      return;
 }
@@ -103,4 +121,5 @@ int main() {
     inseart(root, 1);
     print_tree(root);
     tree_delete(root, 5);
+    print_tree(root);
 }
