@@ -1,0 +1,59 @@
+from numpy import *
+import sys
+
+def load_data(path):
+    f = open(path)
+    data = []
+    for line in f.readlines():
+        arr = []
+        lines = line.strip().split("\t")
+        for x in lines:
+            if x != "-":
+                arr.append(float(x))
+            else:
+                arr.append(float(0))
+        data.append(arr)
+    return data
+
+def gradAscent(data):
+    alpha = 0.0002
+    beta = 0.02
+    K = 4
+    maxCycles = 10000
+
+    dataMat = mat(data)
+    print dataMat
+    m, n = shape(dataMat)
+    p = mat(random.random((m, K)))
+    q = mat(random.random((K, n)))
+    for step in xrange(maxCycles):
+        for i in xrange(m):
+            for j in xrange(n):
+                if dataMat[i,j] > 0:
+                    error = dataMat[i,j]
+                    for k in xrange(K):
+                        error = error - p[i,k]*q[k,j]
+                    for k in xrange(K):
+                        p[i,k] = p[i,k] + alpha * (2 * error * q[k,j] - beta * p[i,k])
+                        q[k,j] = q[k,j] + alpha * (2 * error * p[i,k] - beta * q[k,j])
+        loss = 0.0
+        for i in xrange(m):
+            for j in xrange(n):
+                if dataMat[i,j] > 0:
+                    error = 0.0
+                    for k in xrange(K):
+                        error = error + p[i,k]*q[k,j]
+                    loss = (dataMat[i,j] - error) * (dataMat[i,j] - error)
+                    for k in xrange(K):
+                        loss = loss + beta * (p[i,k] * p[i,k] + q[k,j] * q[k,j]) / 2
+        if loss < 0.001:
+            break
+        if step % 1000 == 0:
+            print loss
+    return p, q
+
+if __name__ == "__main__":
+    dataMatrix = load_data(sys.argv[1])
+    p, q = gradAscent(dataMatrix)
+    result = p * q
+    print result
