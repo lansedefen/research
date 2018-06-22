@@ -6,12 +6,6 @@
 
 using namespace std;  
   
-struct ListNode  
-{  
-    int val;  
-    ListNode* next;  
-};  
-  
 struct cmp  
 {  
     bool operator()(ListNode* a, ListNode* b)  
@@ -40,9 +34,10 @@ ListNode* mergeKLists2(vector<ListNode*> lists)
     {  
         q = heap.top();  
         heap.pop();  
-        if (q->next != NULL)    heap.push(q->next);  
-        if (newHead == NULL)  
-        {   
+        if (q->next != NULL)    
+            heap.push(q->next);
+
+        if (newHead == NULL) {   
             newHead = q;  
             p = q;  
         }  
@@ -55,100 +50,30 @@ ListNode* mergeKLists2(vector<ListNode*> lists)
     return newHead;  
 }  
   
-ListNode* CreateListNode(int value)  
-{  
-    ListNode* pNode = new ListNode();  
-    pNode->val = value;  
-    pNode->next = NULL;  
-  
-    return pNode;  
-}  
-  
-void DestroyList(ListNode* pHead)  
-{  
-    ListNode* pNode = pHead;  
-    while (pNode != NULL)  
-    {  
-        pHead = pHead->next;  
-        delete pNode;  
-        pNode = pHead;  
-    }  
-}  
-  
-void ConnectListNodes(ListNode* pCurrent, ListNode* pNext)  
-{  
-    if (pCurrent == NULL)  
-    {  
-    }  
-    pCurrent->next = pNext;  
-}  
-  
-  
-  
 int main()  
 {  
     vector<ListNode*> lists;  
-    ListNode* pNode1 = CreateListNode(1);  
-    ListNode* pNode2 = CreateListNode(2);  
-    ListNode* pNode3 = CreateListNode(3);  
-    ListNode* pNode4 = CreateListNode(4);  
-  
-    ListNode* pNode5 = CreateListNode(2);  
-    ListNode* pNode6 = CreateListNode(3);  
-    ListNode* pNode7 = CreateListNode(4);  
-    ListNode* pNode8 = CreateListNode(5);  
-  
-    ListNode* pNode9 = CreateListNode(6);  
-    ListNode* pNode10 = CreateListNode(7);  
-    ListNode* pNode11 = CreateListNode(8);  
-    ListNode* pNode12 = CreateListNode(9);  
-  
-    ConnectListNodes(pNode1, pNode2);  
-    ConnectListNodes(pNode2, pNode3);  
-    ConnectListNodes(pNode3, pNode4);  
-  
-    ConnectListNodes(pNode5, pNode6);  
-    ConnectListNodes(pNode6, pNode7);  
-    ConnectListNodes(pNode7, pNode8);  
-  
-    ConnectListNodes(pNode9, pNode10);  
-    ConnectListNodes(pNode10, pNode11);  
-    ConnectListNodes(pNode11, pNode12);  
-  
-    ListNode* L1 = pNode1;  
-    ListNode* L2 = pNode5;  
-    ListNode* L3 = pNode9;  
+
+    int array_1[5] = {1,2,3,4,5};
+    vector<int> input_array_1(array_1, array_1+4);
+    ListNode* head_1;
+    CreateList(&head_1, input_array);
     cout << "链表l1： ";  
-    while (L1)  
-    {  
-        cout << L1->val << " ";  
-        L1 = L1->next;  
-    }  
-    cout << endl;  
+    PrintList(head_1);
+
+    int array_2[5] = {2,4,6,7,9};
+    vector<int> input_array_2(array_2, array_2+4);
+    ListNode* head_2;
+    CreateList(&head_2, input_array);
     cout << "链表l2： ";  
-    while (L2)  
-    {  
-        cout << L2->val << " ";  
-        L2 = L2->next;  
-    }  
-    cout << endl;  
-  
-    cout << "链表l3： ";  
-    while (L3)  
-    {  
-        cout << L3->val << " ";  
-        L3 = L3->next;  
-    }  
-    cout << endl;  
-  
-    lists.push_back(pNode1);  
-    lists.push_back(pNode5);  
-    lists.push_back(pNode9);  
+    PrintList(head_2);
+
+    lists.push_back(head_1);  
+    lists.push_back(head_2);  
+
     ListNode* res = mergeKLists2(lists);  
-  
     cout << "合并后链表： ";  
-    while (res)  
-    {  
+    while (res) {  
         cout << res->val << " ";  
         res = res->next;  
     }  
