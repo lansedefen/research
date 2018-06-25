@@ -24,7 +24,32 @@ void BuildTree(TreeNode*& root) {
     TreeNode* node7 = new TreeNode(7);
 	node1->left = node2;  node1->right = node3;
 	node2->left = node4;  node2->right = node5;
-	//node3->left = node6;  
+	node3->left = node6;  
 	node3->right = node7;
 	root = node1;
+}
+
+void PrintTree(TreeNode* root) {
+    queue<TreeNode*> q;
+    q.push(root);	
+	int first = 1, second = 0;
+    while(!q.empty()) {
+		TreeNode* tmp = q.front();
+        cout << tmp->value << ", ";
+	    q.pop();
+		first -=1;
+		if(tmp->left) {
+		   second +=1;
+		   q.push(tmp->left);
+		}	
+        if (tmp->right) {
+		   second +=1;
+		   q.push(tmp->right);
+		}
+     	if( 0 == first) {
+		    first = second;
+			cout << endl;
+		}
+	}
+	cout << endl;
 }
