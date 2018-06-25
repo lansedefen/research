@@ -4,8 +4,10 @@ using namespace std;
 
 // 去除排序数组中的重复数字
 // time: O(n), space: O(1)
-int removeDuplicates(vector<int> & nums) {
-		if (nums.empty()) return 0; 
+int RemoveDuplicates(vector<int> & nums) {
+		if (nums.empty()) 
+            return 0; 
+
 		int index = 0;
 		for (int i =1; i< nums.size(); i++) {
 			if(nums[i] != nums[index]) {
@@ -15,12 +17,61 @@ int removeDuplicates(vector<int> & nums) {
 		return index + 1;
 }
 
-int main() {
-	int num_array[] = {1,1,2,3,3,4,5,5};
-	vector<int> nums(num_array, num_array + 8);
-	removeDuplicates(nums);
+// 
+int RemoveNum(vector<int>& nums, int target) {
+    if(nums.empty()) {
+        return 0;
+    }
+
+    int index = 0;
+    for(int i = 0; i< nums.size();i++) {
+        if (target != nums[i]) {
+            nums[index] = nums[i];
+            index++;
+        }
+    }
+    return index ;
+}
+
+
+int PartArray(vector<int>& nums) {
+    if(nums.size() == 0) {
+        return 0;
+    }
+
+    int target = nums[0];
+    int index = 0;
+    int tmp_index = 0;
+    for(int i=1; i < nums.size();i++) {
+        if (nums[i] <= target) {
+            if (index == tmp_index) {
+                tmp_index =i;
+            }
+            swap(nums[i], nums[index]);
+            index ++;
+        }
+    }
+    cout << nums[index] << endl <<index << endl;
+    swap(nums[tmp_index], nums[index]);
+    return -1;
+}
+
+int PrintArray(vector<int>& nums) {
 	for(int i =0;i < nums.size();i++) {
-			cout << nums[i] << endl;
+			cout << nums[i] << ",";
 	}
+    cout << endl;
+    return -1;
+}
+
+int main() {
+	int num_array[] = {3,9,-2,4,0,1,0,-1};
+	vector<int> nums(num_array, num_array + 8);
+	//RemoveDuplicates(nums);
+    //RemoveNum(nums, 3); 
+
+    PrintArray(nums);
+    PartArray(nums); 
+    PrintArray(nums);
 	return -1;
 }	
