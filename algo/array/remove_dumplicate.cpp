@@ -56,6 +56,36 @@ int PartArray(vector<int>& nums) {
     return -1;
 }
 
+int MoveArray(vector<int>& nums) {
+    if(nums.size() == 0) {
+        return 0;
+    }
+
+    int index = 0;
+    for(int i=1; i < nums.size();i++) {
+        if (nums[i] % 2 == 0) {
+            swap(nums[i], nums[index]);
+            index ++;
+        }
+    }
+    return -1;
+}
+
+int MoveArrayOrder(vector<int>& nums) {
+    if(nums.size() == 0) {
+        return 0;
+    }
+
+    int index = 0;
+    for(int i=1; i < nums.size();i++) {
+        if (nums[i] % 2 == 0) {
+            swap(nums[i], nums[index]);
+            index ++;
+        }
+    }
+    return -1;
+}
+
 int PrintArray(vector<int>& nums) {
 	for(int i =0;i < nums.size();i++) {
 			cout << nums[i] << ",";
@@ -70,8 +100,10 @@ int main() {
 	//RemoveDuplicates(nums);
     //RemoveNum(nums, 3); 
 
+    //PrintArray(nums);
+    //PartArray(nums); 
     PrintArray(nums);
-    PartArray(nums); 
+    MoveArray(nums);
     PrintArray(nums);
 	return -1;
 }	
