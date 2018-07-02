@@ -3,7 +3,7 @@
 
 using namespace std;
 
-bool bin_search(vector<int>& arr, int start, int end, int val) {
+bool BinarySearch(vector<int>& arr, int start, int end, int val) {
      int mid = (start + end) /2; 
      cout << "start, end, mid:" << start << "," << end << "," << mid << endl;
      while (start < end) {
@@ -20,17 +20,62 @@ bool bin_search(vector<int>& arr, int start, int end, int val) {
      return false;
 }
 
-int main() {
-   vector<int > arr;
-   arr.push_back(1);
-   arr.push_back(4);
+bool SearchRotate(vector<int>& nums, int start, int end, int val) {
+	while (start < end) {
+		int middle = start + (end - start) /2 ;
+		if (nums[middle] == val) {
+			return true;
+		}
 
-   /*
-   arr.push_back(6);
-   arr.push_back(9);
-   arr.push_back(9);
-   arr.push_back(9);
-   */
-   bool x = bin_search(arr,0,arr.size(), -1);
-   cout << x << endl;
+		if (nums[middle] < nums[start]) {
+			if(val > nums[middle] && val <= nums[end-1]) {
+				start = middle + 1;
+			}else {
+				end = middle;
+			}
+		} else {
+			if (val >= nums[start] && val < nums[middle] ) {
+				end = middle;
+			} else {
+				start = middle + 1;
+			} 	
+		}
+	}
+	return false;
+}
+
+bool SearchDupRotate(vector<int>& nums, int start, int end, int val) {
+	while (start < end) {
+		int middle = start + (end - start) /2 ;
+		if (nums[middle] == val) {
+			return true;
+		}
+
+		if (nums[middle] < nums[start]) {
+			if(val > nums[middle] && val <= nums[end-1]) {
+				start = middle + 1;
+			}else {
+				end = middle;
+			}
+		} else if  (nums[middle] > nums[start]) {
+			if (val >= nums[start] && val < nums[middle] ) {
+				end = middle;
+			} else {
+				start = middle + 1;
+			} 	
+		} else {
+			start ++;
+		}
+	}
+	return false;
+}
+
+int main() {
+   int input[] = {1,2,3,4,5,0};
+   vector<int > nums(input, input + 6);
+
+   //bool res = BinarySearch(nums, 0, nums.size(), -1);
+   bool res = SearchRotate(nums, 0, nums.size(), 0);
+
+   cout << res  << endl;
 }
