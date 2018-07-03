@@ -5,17 +5,10 @@
 using namespace std;
 
 void pailie(vector<int>& input,vector<int>& label, vector<int>& res, int index) {
-    if (res.size() >0 && res.size() < index) {
-        for (int j=0;j < res.size(); j++)
-            cout << res[j] << ",";
-        cout << endl;
-    
-    }
     if( res.size() == index) {
         for (int j=0;j < res.size(); j++)
             cout << res[j] << ",";
         cout << endl;
-        return;
     }
 
     for(int i= 0; i < input.size(); i++){
@@ -30,13 +23,8 @@ void pailie(vector<int>& input,vector<int>& label, vector<int>& res, int index) 
 }
 
 void zuhe(vector<int>& input, vector<int>& label, vector<int>& res, int index) {
-    if (res.size() >0 && res.size() < 2) {
-        for (int j=0;j < res.size(); j++)
-            cout << res[j] << ",";
-        cout << endl;
-    
-    }
-    if (res.size() == 2) {
+    //cout << "index:" << index << endl;
+    if (res.size() <= index) {
         for (int j=0;j < res.size(); j++) {
              cout << res[j] << ",";
         }
@@ -51,10 +39,11 @@ void zuhe(vector<int>& input, vector<int>& label, vector<int>& res, int index) {
                 break;
             }
         }
+
         if (i > max_label) {
             res.push_back(input[i]);
             label[i] = 1;
-            zuhe(input, label, res, index + 1);
+            zuhe(input, label, res, index);
             label[i] = 0;
             res.pop_back();
         }
@@ -107,16 +96,15 @@ void FindPath(vector<vector<int> >& matrix, vector<vector<int> >& label, vector<
 }
 
 int main() {
-    vector<int> input;
-    //vector<int> label(5, 0);
-    input.push_back(1);
-    input.push_back(2);
-    input.push_back(3);
-    input.push_back(4);
-    input.push_back(5);
+    int nums[] = {1,2,3,4,5};
+    vector<int> input(nums, nums+5);
+    vector<int> label(5, 0);
     vector<int> res;
-    int index = 3;
+    int index = 5;
+    //pailie(input, label, res, index);
+    zuhe(input, label, res, 2);
 
+    /*
     vector<vector<int> > matrix(4, vector<int>(4, 0));
     matrix[0][1] = 1;
     matrix[0][2] = 2;
@@ -128,12 +116,10 @@ int main() {
     matrix[2][0] = 8;
     matrix[2][1] = 9;
 
-    vector<vector<int> > label(4, vector<int>(4, 1));
     label[0][0] = 0;
     res.push_back(0);
     FindPath(matrix, label, res, "abc", 0, 0);
     //Get3Sum(input, label, res, index);
-    //zuhe(input, label, res, index);
-    //pailie(input, label, res, index);
+    */
     return -1;
 }
