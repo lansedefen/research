@@ -1,6 +1,7 @@
 #include<vector>
 #include<string>
 #include<iostream>
+#include<numeric>
 
 using namespace std;
 
@@ -20,18 +21,15 @@ void Get2sumsort(vector<int> arr, int target) {
 	}
 }
 
-void Get3Sum(vector<int>& input, vector<int>& label, vector<int>& res,int index) {
-    if (res.size() == 3) {
-        int sum_value=0;
+void GetSum(vector<int>& input, vector<int>& label, vector<int>& res, int index) {
+    int total = accumulate(res.begin(), res.end(), 0);
+    if (total == index) {
         for (int j=0;j < res.size(); j++) {
-             sum_value += res[j];
              cout << res[j] << ",";
-        }
-        if (sum_value == 9) {
-            cout << "hit" << endl;
         }
         cout << endl;
     }
+
     for (int i = 0; i< input.size(); i++) {
         int max_label = -1;
         for (int j = label.size()-1;j>=0;j--) {
@@ -40,11 +38,10 @@ void Get3Sum(vector<int>& input, vector<int>& label, vector<int>& res,int index)
                 break;
             }
         }
-
         if (i > max_label) {
             res.push_back(input[i]);
             label[i] = 1;
-            Get3Sum(input, label, res, index + 1);
+            GetSum(input, label, res, index);
             label[i] = 0;
             res.pop_back();
         }
@@ -52,15 +49,11 @@ void Get3Sum(vector<int>& input, vector<int>& label, vector<int>& res,int index)
 }
 
 int main() {
-	vector<int> arr;
-	arr.push_back(1);
-	arr.push_back(3);
-	arr.push_back(5);
-	arr.push_back(8);
-	arr.push_back(9);
-	arr.push_back(10);
-	arr.push_back(16);
+    int input[] = {1,2,3,4,5,8,9};
+	vector<int> arr(input, input + 7);
 	int target = 13;
-	Get2sumsort(arr, target);
+    vector<int> label(7, 0);
+    vector<int> res;
+	GetSum(arr, label, res, target);
 	return -1;
 }
