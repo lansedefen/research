@@ -17,6 +17,19 @@ int RemoveDuplicates(vector<int> & nums) {
 		return index + 1;
 }
 
+int RemoveKDuplicates(vector<int> & nums) {
+		if (nums.empty()) 
+            return 0; 
+
+		int index = 1;
+		for (int i =2; i< nums.size(); i++) {
+			if(nums[i] != nums[index - 1]) {
+				nums[++index] = nums[i];
+			}
+		}
+		return index + 1;
+}
+
 // 
 int RemoveNum(vector<int>& nums, int target) {
     if(nums.empty()) {
@@ -32,7 +45,6 @@ int RemoveNum(vector<int>& nums, int target) {
     }
     return index ;
 }
-
 
 int PartArray(vector<int>& nums) {
     if(nums.size() == 0) {
@@ -95,15 +107,16 @@ int PrintArray(vector<int>& nums) {
 }
 
 int main() {
-	int num_array[] = {3,9,-2,4,0,1,0,-1};
+	int num_array[] = {1,1,1,2,3,3,4,4};
 	vector<int> nums(num_array, num_array + 8);
 	//RemoveDuplicates(nums);
+	RemoveKDuplicates(nums);
     //RemoveNum(nums, 3); 
 
     //PrintArray(nums);
     //PartArray(nums); 
-    PrintArray(nums);
-    MoveArray(nums);
+    //PrintArray(nums);
+    //MoveArray(nums);
     PrintArray(nums);
 	return -1;
 }	
