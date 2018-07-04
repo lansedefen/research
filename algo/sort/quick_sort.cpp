@@ -1,39 +1,47 @@
 #include<iostream>
 #include<vector>
+#include"array_head.h"
 
 using namespace std;
 
-void quick_sort(vector<int>& arr, int left, int right) {
-	if(left >= right) {
+int PartVector(vector<int>& arr, int start, int end) {
+	int i = start, j = end;
+	int base = arr[start];
+    cout << "start:" << start << ", end:" << end << ", base:" << base << endl;
+    PrintVector(arr, "arr1");
+	while(i < j) {
+	    while (arr[j] >= base && i < j) {
+	        j--;
+	    }
+	    arr[i] = arr[j];
+
+        while (arr[i] <= base && i < j) {
+	        i++;
+	    }
+	    arr[j] = arr[i];
+	}
+	arr[start] = base;
+
+    PrintVector(arr, "arr2");
+    return i;
+}
+
+void QuickSort(vector<int>& arr, int start, int end) {
+	if(start >= end) {
 	   return;
 	}
-	int i, j = right;
-        i = left;
-	int base = arr[left];
-	while(left < right) {
-	    while (arr[right] >= base && left < right) {
-	        right--;
-	    }
-	    arr[left] = arr[right];
-            while (arr[left] <= base && left < right) {
-	        left++;
-	    }
-	    arr[right] = arr[left];
-	}
-	arr[left] = base;
-	quick_sort(arr, i, left - 1);
-	quick_sort(arr, left + 1, j);
+
+    int middle = PartVector(arr, start, end);
+	QuickSort(arr, start, middle - 1);
+	QuickSort(arr, middle + 1, end);
 }
 
 int main() {
-    int tmp[6] = {2, 2, -1, 10, 0, 3};
-    vector<int > arr(begin(tmp), end(tmp));
-    for (int i=0; i < arr.size(); i++) {
-       cout << arr[i] << endl;
-    }
-    cout << "----------------" << endl;;
-    quick_sort(arr, 0, arr.size() - 1);
-    for (int i=0; i < arr.size(); i++) {
-       cout << arr[i] << endl;
-    }
+    int tmp[] = {2, 2, -1, 10, 0, 3};
+    vector<int > arr(tmp, tmp + 6);
+    PrintVector(arr);
+
+    QuickSort(arr, 0, arr.size() - 1);
+    PrintVector(arr);
+    return -1;
 }
