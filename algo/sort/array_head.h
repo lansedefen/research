@@ -14,3 +14,8 @@ void PrintVector(vector<int>& nums, string name = "") {
      }
      cout << endl;
 }
+
+void CreateVector(vector<int>& nums) {
+	int tmp[] = {-1, 2, 3, -4, 6};
+	nums = vector<int>(tmp, tmp + 5);
+}
