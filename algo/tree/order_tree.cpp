@@ -7,6 +7,10 @@
 using namespace std;
 
 void PrintTreeByLay(TreeNode* root) {
+    if (root == NULL) {
+        return;
+    }
+
     queue<TreeNode*> q;
     q.push(root);	
 	int first = 1, second = 0;
@@ -19,6 +23,7 @@ void PrintTreeByLay(TreeNode* root) {
 		   second +=1;
 		   q.push(tmp->left);
 		}	
+
         if (tmp->right) {
 		   second +=1;
 		   q.push(tmp->right);
@@ -32,7 +37,8 @@ void PrintTreeByLay(TreeNode* root) {
 }
 
 void PreOrderRecu(TreeNode* root) {
-     if(root == NULL) return;
+     if(root == NULL) 
+        return;
 
      stack<TreeNode*> s;
 	 s.push(root);
@@ -40,9 +46,11 @@ void PreOrderRecu(TreeNode* root) {
 	 	TreeNode* p = s.top();
 		cout << p->value << ", ";
 		s.pop();
+
 		if(p->right) {
 	    	s.push(p->right);
 		}
+
 		if(p->left) {
 		    s.push(p->left);
 		}
@@ -50,34 +58,16 @@ void PreOrderRecu(TreeNode* root) {
 	 cout << endl;
 }
 
-void MiddleOrderRecu(TreeNode* root)  {  
-    if (root == NULL)  return;  
-    TreeNode* p = root;  
-    stack<TreeNode*> s;  
-    while (!s.empty() || p)  
-    {  
-        if (p)  {  
-            s.push(p);  
-            p = p->left;  
-        }  
-        else  {  
-            p = s.top();  
-            s.pop();  
-            cout << p->value << ", ";  
-            p = p->right;  
-        }  
-    } 
-    cout << endl;	
-}  
-
 void PostOrderRecu(TreeNode *root) {
-    if(root == NULL) return;
+    if(root == NULL) 
+        return;
 
     stack<TreeNode *> s;
     s.push(root);
     TreeNode *last = root;
     while (!s.empty()) {
         TreeNode* p = s.top();
+
         if( (p->left == NULL && p->right == NULL) 
            || (p->right == NULL && last == p->left) 
            || (last == p->right) ) {
@@ -93,6 +83,80 @@ void PostOrderRecu(TreeNode *root) {
         }
     }
 	cout << endl;
+}
+
+void PrevOrderNon(TreeNode* root)    //非递归--前序
+{
+    if(root == NULL) {
+        return ;
+    }
+
+    stack<TreeNode*> s;
+    TreeNode* cur = root;
+    while(cur || !s.empty()) {
+        while (cur) {
+            cout << cur->value << " ";
+            s.push(cur);
+            cur = cur->left;
+        }
+
+        TreeNode* top = s.top();
+        s.pop();
+        cur = top->right;  //访问当前根节点的右子树
+    }
+    cout<<endl;
+}
+
+void InOrderNon(TreeNode* root)      //非递归--中序
+{
+    if(root == NULL)
+        return;
+
+    stack<TreeNode*> s;
+    TreeNode* cur = root;
+    while(cur || !s.empty()) {
+        while(cur)
+        {
+            s.push(cur);
+            cur = cur->left;
+        }
+
+        TreeNode* top = s.top();    //此时栈顶存的是当前子树的根节点
+        cout<<top->value<<" ";
+        s.pop();
+        cur = top->right;  //将右子树作äB
+    }
+    cout << endl;
+}
+
+void PostOrderNon(TreeNode* root)    //非递归--后序
+{
+    if (root == NULL) {
+        return;
+    }
+
+    stack<TreeNode*> s;
+    TreeNode* cur = root;
+    TreeNode* pos = root;
+    while (cur || !s.empty()) {
+        while (cur) {
+            s.push(cur);
+            cur = cur->left;
+        }
+
+        TreeNode* top = s.top();
+        //top存的是当前的根节点，当top的右子树为空或者top的右子树为pos，说明右子树已经遍历过，
+        //这时就可以访问当前的根节点了
+        if (top->right == NULL || top->right == pos) {
+            cout<<top->value<<" ";
+            pos = top;
+            s.pop();
+        }
+        else {
+            cur = top->right;
+        }
+    }
+    cout<<endl;
 }
 
 void PreOrder(TreeNode* root) {
@@ -135,6 +199,10 @@ int main () {
 	PreOrderRecu(root);
 	cout << "---------" << endl;
     //
+	cout << "MiddleOder" << endl;
+	MiddleOrder(root);
+	cout << "---------" << endl;
+    //
     cout << "PostOrder" << endl;
     PostOrder(root);
     cout << "----------" << endl;
@@ -142,14 +210,11 @@ int main () {
 	cout << "PostOrderRecu" << endl;
     PostOrderRecu(root);
     cout << "----------" << endl;
-    //
-    cout << "MiddleOrder" << endl;
-    MiddleOrder(root);
-    cout << "----------" << endl;
 	// 
-	cout << "MiddleOrderRecu" << endl;
-    MiddleOrderRecu(root);
-    cout << "----------" << endl;
-	// 
+
+    cout << "new:" << endl;    
+    PrevOrderNon(root);
+    InOrderNon(root);
+    PostOrderNon(root);
 	return -1;
 }
