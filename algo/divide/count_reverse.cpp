@@ -1,38 +1,48 @@
 #include<iostream>
 #include<vector>
-#include"array_head.h"
+#include"../sort/array_head.h"
 
 using namespace std;
 
-void CombineVector(vector<int>& arr, int start, int middle, int end) {
+int CombineCount(vector<int>& arr, int start, int middle, int end) {
       vector<int> tmp(arr.begin(), arr.end());
       PrintVector(tmp, "tmp");
 
       int i = start, j = middle + 1;
       int index = start;
-      while( i <= middle || j <= end) {
+    int nums = 0;
+      while( i <= middle && j <= end) {
 		  cout << "i:" << i << ", j:" << j << ", tmp_i:" << tmp[i] <<", tmp_j:"<< tmp[j] << ", middle:" << middle << ", end:" << end << endl;
-          if(j > end || (tmp[i] < tmp[j] && i <= middle)) {
+          if (tmp[i] <= tmp[j]) {
 	        arr[index++] = tmp[i++];
-            continue;
 	      } 
 
-          if (i > middle || (tmp[i] >= tmp[j] && j <= end))  {
+          else {
+            nums += (middle - i + 1);
 	        arr[index++] = tmp[j++];
-            continue;
 	      }
       }
+
+    while(i <= middle) {
+	    arr[index++] = tmp[i++];
+    }
+
+    while(j <= end) {
+	    arr[index++] = tmp[j++];
+    }
 	  PrintVector(arr, "arr1");
+    return nums;
 }
 
-void MergeSort(vector<int>& arr, int start, int end) {
+int MergeSort(vector<int>& arr, int start, int end) {
      if (start >= end) {
-        return;
+        return 0;
      }
      int middle = start + (end - start) /2;
-     MergeSort(arr, start, middle);
-     MergeSort(arr, middle + 1, end);
-     CombineVector(arr, start, middle, end);
+     int left_nums = MergeSort(arr, start, middle);
+     int right_nums = MergeSort(arr, middle + 1, end);
+     int middle_nums = CombineCount(arr, start, middle, end);
+     return left_nums + right_nums + middle_nums;
 }
 
 int main() {
@@ -41,7 +51,9 @@ int main() {
 
     vector<int> arr;
 	CreateVector(arr);
+    arr.push_back(-5);
     PrintVector(arr, "arr");
-    MergeSort(arr, 0, arr.size()-1);
+    int res = MergeSort(arr, 0, arr.size()-1);
     PrintVector(arr, "arr" );
+    cout << res << endl;
 }
