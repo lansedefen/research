@@ -1,6 +1,6 @@
 #include<iostream>
 #include<vector>
-#include"../sort/array_head.h"
+#include"../array/array_head.h"
 
 using namespace std;
 
