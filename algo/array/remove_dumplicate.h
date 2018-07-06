@@ -47,7 +47,6 @@ int RemoveNum(vector<int>& nums, int target) {
     return index ;
 }
 
-/*
 int PartVector(vector<int>& nums) {
     if(nums.size() == 0) {
         return 0;
@@ -68,7 +67,7 @@ int PartVector(vector<int>& nums) {
     cout << nums[index] << endl <<index << endl;
     swap(nums[tmp_index], nums[index]);
     return -1;
-}*/
+}
 
 int PartVector(vector<int>& nums, int start, int end) {
      int i = start, j = end;
