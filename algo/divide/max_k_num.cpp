@@ -1,23 +1,40 @@
 #include<vector>
 #include<string>
 #include<iostream>
+
 using namespace std;
 
-int AdjustVector(vector<int>& input, int start, int end); 
+int PartVector(vector<int>& nums, int start, int end) {
+    int i = start, j = end;
+    int base = nums[start];
+    while (i < j) {
+        while (i < j && nums[j] > base) {
+            j--;
+        }
+        nums[i] = nums[j];
 
-bool FindMaxKNum(vector<int>& input, int start, int end, int k) { 
-    int num = AdjustVector(input, start, end);
+        while (i<j && nums[i] <= base) {
+            i++;
+        }
+        nums[j] = nums[i];
+    }
+    nums[i] = base;
+    return i;
+}
+
+bool FindMaxKNum(vector<int>& nums, int start, int end, int k) { 
+    int num = PartVector(nums, start, end);
     cout << "num:" << num << ", start:" << start << ", end:" << end << ", k:" << k <<endl;
     if (num - start == k) {
         return true; 
     }
     else if (num - start < k) {
        cout << "1: num:" << num << ", start:" << num + 1 << ", end:" << end << ", k:" << k + start - num -1 <<endl;
-       return FindMaxKNum(input, num + 1, end, k + start - num -1); 
+       return FindMaxKNum(nums, num + 1, end, k + start - num -1); 
     }
     else {
        cout << "2: num:" << num << ", start:" << start << ", end:" << num-1 << ", k:" << k <<endl;
-       return FindMaxKNum(input, start, num-1, k);
+       return FindMaxKNum(nums, start, num-1, k);
     }
 }
 
@@ -61,64 +78,18 @@ int FindMedia(vector<int>& nums_first, vector<int>& nums_second) {
 	return -1;
 }
 
-int AdjustVector(vector<int>& input, int start, int end) {
-    for(int i=0;i< input.size(); i++) {
-        cout << input[i] << ",";    
-    }
-    cout << endl;
-    int base = input[start];
-    int i = start;
-    int j = end;
-    while (i < j) {
-        while (i < j && input[j] > base) {
-            j--;
-        }
-        cout << "j:" << j << ", i:"<< i <<endl;
-        if (i<=j) {
-            input[i] = input[j];
-        }
-
-        for(int k=0; k< input.size(); k++) {
-            cout << input[k] << ",";    
-        }
-        cout << endl;
-
-        while (i<j && input[i] <= base) {
-            i++;
-        }
-        cout << "i:" << i << ", j:"<< j << endl;
-        if (i<=j) {
-            input[j] = input[i];
-        }
-
-        for(int k=0; k< input.size(); k++) {
-            cout << input[k] << ",";    
-        }
-        cout << endl;
-    }
-
-    input[i] = base;
-
-    cout << "-----------------" << endl;
-    for(int i=0;i< input.size(); i++) {
-        cout << input[i] << ",";    
-    }
-    cout << endl;
-    return i;
-}
-
 int main() {
 	int nums_first[] = {-1, 0, 2, 4};
-    vector<int> input_first(nums_first, nums_first + 4);
+    vector<int> nums_first(nums_first, nums_first + 4);
 
 	int nums_second[] = {1, 3, 4, 5, 6};
-    vector<int> input_second(nums_second, nums_second + 5);
+    vector<int> nums_second(nums_second, nums_second + 5);
  
     //int start = 0;
     //int end = 6;
-    // AdjustVector(input, start , end);
-    //FindMaxKNum(input, start , end, k);
-	int res = FindMedia(input_first, input_second);
+    // AdjustVector(nums, start , end);
+    //FindMaxKNum(nums, start , end, k);
+	int res = FindMedia(nums_first, nums_second);
 	cout << res << endl;
     return -1;
 }
