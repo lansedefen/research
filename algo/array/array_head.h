@@ -1,3 +1,6 @@
+#ifndef ARRAY_HEAD_H_                                                
+#define ARRAY_HEAD_H_   
+
 #include<iostream>
 #include<vector>
 #include<string>
@@ -19,3 +22,5 @@ void CreateVector(vector<int>& nums) {
 	int tmp[] = {-1, 2, 3, -4, 6};
 	nums = vector<int>(tmp, tmp + 5);
 }
+
+#endif

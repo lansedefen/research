@@ -47,6 +47,7 @@ int RemoveNum(vector<int>& nums, int target) {
     return index ;
 }
 
+/*
 int PartVector(vector<int>& nums) {
     if(nums.size() == 0) {
         return 0;
@@ -67,6 +68,27 @@ int PartVector(vector<int>& nums) {
     cout << nums[index] << endl <<index << endl;
     swap(nums[tmp_index], nums[index]);
     return -1;
+}*/
+
+int PartVector(vector<int>& nums, int start, int end) {
+     int i = start, j = end;
+     int base = nums[start];
+     while (i < j) {
+         cout << "i:" << i << ", j:" << j << endl;
+         while (i < j && nums[j] > base) {
+             j--;
+         }
+         nums[i] = nums[j];
+ 
+         cout << "i2:" << i << ", j2:" << j << endl;
+         while (i <j && nums[i] <= base) {
+             i++;
+         }
+         nums[j] = nums[i];
+         cout << "i3:" << i << ", j3:" << j << endl;
+     }
+     nums[i] = base;
+     return i;
 }
 
 int MoveVector(vector<int>& nums) {

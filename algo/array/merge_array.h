@@ -63,7 +63,7 @@ int MergeVector(vector<int>& arr, int start, int middle, int end) {
 
       int i = start, j = middle + 1;
       int index = start;
-      while( i <= middle || j <= end) {
+      while( i <= middle && j <= end) {
           if(tmp[i] < tmp[j]) {
 	        arr[index++] = tmp[i++];
 	      } else { 
@@ -74,10 +74,11 @@ int MergeVector(vector<int>& arr, int start, int middle, int end) {
       while(i <=middle) {
         arr[index++] = tmp[i++];
       }
+
       while (j <=end) {
         arr[index++] = tmp[j++];
       }
-	  PrintVector(arr, "arr1");
+	 PrintVector(arr, "arr1");
      return -1;
 }
 
