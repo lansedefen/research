@@ -1,27 +1,10 @@
 #include<iostream>
 #include<vector>
-#include"array_head.h"
+#include"../array/array_head.h"
+#include"../array/remove_dumplicate.h"
 #include"../list/list_head.h"
 
 using namespace std;
-
-int PartVector(vector<int>& arr, int start, int end) {
-	int i = start, j = end;
-	int base = arr[start];
-	while(i < j) {
-	    while (arr[j] >= base && i < j) {
-	        j--;
-	    }
-	    arr[i] = arr[j];
-
-        while (arr[i] < base && i < j) {
-	        i++;
-	    }
-	    arr[j] = arr[i];
-	}
-	arr[i] = base;
-    return i;
-}
 
 void QuickSort(vector<int>& arr, int start, int end) {
 	if(start >= end) {
@@ -29,7 +12,8 @@ void QuickSort(vector<int>& arr, int start, int end) {
 	}
 
     int middle = PartVector(arr, start, end);
-	QuickSort(arr, start, middle);
+    cout << "middle:" << middle << ", start:" << start << ", end:" << end << endl;
+	QuickSort(arr, start, middle-1);
 	QuickSort(arr, middle + 1, end);
 }
 
@@ -61,7 +45,6 @@ void QuickSortList(ListNode* head, ListNode* start, ListNode* end) {
     }
     ListNode* middle = PartList(head, start, end);
     QuickSortList(head, start, middle);
-    
     
 }
 
