@@ -15,10 +15,9 @@ struct cmp {
 
 //用一个大小为K的最小堆（用优先队列+自定义降序实现）(优先队列就是大顶堆，队头元素最大,自定义为降序后，就变成小顶堆，队头元素最小)，  
 //先把K个链表的头结点放入堆中，每次取堆顶元素，然后将堆顶元素所在链表的下一个结点加入堆中。  
-ListNode* mergeKLists2(vector<ListNode*> lists)  {  
+ListNode* MergeKList(vector<ListNode*> lists)  {  
     if (lists.size() == 0) 
 		return NULL;  
-
     priority_queue<ListNode*, vector<ListNode*>, cmp> heap;  
     for (int i = 0; i < lists.size(); ++i)  {  
         heap.push(lists[i]);  
@@ -44,6 +43,31 @@ ListNode* mergeKLists2(vector<ListNode*> lists)  {
     }  
     return new_head;  
 }  
+
+ListNode* Merge2List(ListNode* first_head, ListNode* second_head) {
+	ListNode* new_head, *new_tail = NULL;
+	while(first_head && second_head) {
+		if(first_head-> value < second_head -> value) {
+			if( !new_head ) {
+				new_head = new_tail = first_head;
+				first_head = first->next;
+				continue;
+			}
+			new_tail->next = first_head;
+			first_head = first->next;
+		} else {
+			if( !new_head) {
+				new_head = new_tail = second_head;
+				second_head = second->next;
+				continue;
+			}
+			new_tail->next = second_head;
+			second_head = second->next;
+		}
+	}
+
+	return new_head;
+}
   
 int main()  {  
     vector<ListNode*> lists;  
@@ -65,7 +89,7 @@ int main()  {
     lists.push_back(head_1);  
     lists.push_back(head_2);  
 
-    ListNode* res = mergeKLists2(lists);  
+    ListNode* res = MergeKList(lists);  
     cout << "合并后链表： ";  
     while (res) {  
         cout << res->value << " ";  
