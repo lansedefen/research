@@ -45,31 +45,34 @@ ListNode* MergeKList(vector<ListNode*> lists)  {
 }  
 
 ListNode* Merge2List(ListNode* first_head, ListNode* second_head) {
-	ListNode* new_head, *new_tail = NULL;
+	ListNode* new_head = NULL, *new_tail = NULL;
 	while(first_head && second_head) {
+        //cout << "first_head:" << first_head ->value << " ," << "second_head:" << second_head-> value << endl;
 		if(first_head-> value < second_head -> value) {
 			if( !new_head ) {
-				new_head = new_tail = first_head;
-				first_head = first->next;
-				continue;
+				new_head = first_head;
+            } else {
+			    new_tail->next = first_head;
 			}
-			new_tail->next = first_head;
-			first_head = first->next;
+
+            new_tail = first_head;
+			first_head = first_head->next;
 		} else {
 			if( !new_head) {
-				new_head = new_tail = second_head;
-				second_head = second->next;
-				continue;
-			}
-			new_tail->next = second_head;
-			second_head = second->next;
+				new_head = second_head;
+			} else {
+			    new_tail->next = second_head;
+            }
+
+            new_tail = second_head;
+			second_head = second_head->next;
 		}
 	}
 
     if (first_head == NULL) {
-        new_tail->next = second;
+        new_tail->next = second_head;
     } else {
-        new_tail->next = first;
+        new_tail->next = first_head;
     }
 	return new_head;
 }
@@ -77,15 +80,15 @@ ListNode* Merge2List(ListNode* first_head, ListNode* second_head) {
 int main()  {  
     vector<ListNode*> lists;  
 
-    int array_1[5] = {1,2,3,4,5};
-    vector<int> input_array_1(array_1, array_1+4);
+    int array_1[] = {1,2,3,4,5};
+    vector<int> input_array_1(array_1, array_1+5);
     ListNode* head_1;
     CreateList(&head_1, input_array_1);
     cout << "链表l1： ";  
     PrintList(head_1);
 
-    int array_2[5] = {2,4,6,7,9};
-    vector<int> input_array_2(array_2, array_2+4);
+    int array_2[] = {2,4,6,7,9};
+    vector<int> input_array_2(array_2, array_2+5);
     ListNode* head_2;
     CreateList(&head_2, input_array_2);
     cout << "链表l2： ";  
@@ -94,12 +97,17 @@ int main()  {
     lists.push_back(head_1);  
     lists.push_back(head_2);  
 
-    ListNode* res = MergeKList(lists);  
+    /*ListNode* res = MergeKList(lists);  
     cout << "合并后链表： ";  
     while (res) {  
         cout << res->value << " ";  
         res = res->next;  
     }  
     cout << endl;  
+    */
+
+    cout << "合并后链表： ";  
+    ListNode* new_head = Merge2List(head_1, head_2);
+    PrintList(new_head);
     return 0;  
 }  
