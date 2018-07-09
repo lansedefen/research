@@ -66,6 +66,11 @@ ListNode* Merge2List(ListNode* first_head, ListNode* second_head) {
 		}
 	}
 
+    if (first_head == NULL) {
+        new_tail->next = second;
+    } else {
+        new_tail->next = first;
+    }
 	return new_head;
 }
   
