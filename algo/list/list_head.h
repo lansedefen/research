@@ -31,3 +31,26 @@ int PrintList(ListNode* head) {
     cout << endl;
     return -1;
 }
+
+ListNode* GetListEnd(ListNode* head) {
+    ListNode* tail = head;
+    while(head) {
+        tail = head;
+        head = head -> next;
+    }
+    return tail;
+}
+
+ListNode* GetListMiddle(ListNode* head) {
+    if(!head) {
+        return NULL;
+    }
+
+    ListNode* fast = head;
+    ListNode* slow = head;
+    while(fast && fast->next) {
+        fast = fast->next ->next;
+        slow = slow->next;
+    }
+    return slow;
+}
