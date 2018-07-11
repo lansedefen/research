@@ -6,13 +6,14 @@
 using namespace std;
 
 void MergeSort(vector<int>& arr, int start, int end) {
-     if (start >= end) {
+     if (start >= end -1) {
         return;
      }
 
      int middle = start + (end - start) /2;
+     cout << "start:" << start << ", middle:" << middle << ", end:" << end << endl;
      MergeSort(arr, start, middle);
-     MergeSort(arr, middle + 1, end);
+     MergeSort(arr, middle, end);
      MergeVector(arr, start, middle, end);
 }
 
@@ -23,6 +24,6 @@ int main() {
     vector<int> arr;
 	CreateVector(arr);
     PrintVector(arr, "arr");
-    MergeSort(arr, 0, arr.size()-1);
-    PrintVector(arr, "arr" );
+    MergeSort(arr, 0, arr.size());
+    PrintVector(arr, "arr");
 }
