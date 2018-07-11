@@ -7,18 +7,16 @@
 using namespace std;
 
 int FindMaxKNum(vector<int>& nums, int start, int end, int k) { 
-    if (end - start <k) {
+    if (end -1 - start <k) {
         return -1;
     }
 
-    int num = PartVector(nums, start, end);
-    if (num - start < k) {
-       //cout << "1: num:" << num << ", start:" << num + 1 << ", end:" << end << ", k:" << k + start - num -1 <<endl;
-       return FindMaxKNum(nums, num + 1, end, k + start - num -1); 
+    int middle = PartVector(nums, start, end);
+    if (middle - start >= k) {
+       return FindMaxKNum(nums, start, middle, k);
     }
     else {
-       //cout << "2: num:" << num << ", start:" << start << ", end:" << num-1 << ", k:" << k <<endl;
-       return FindMaxKNum(nums, start, num-1, k);
+       return FindMaxKNum(nums, middle + 1, end, k - (middle - start - 1) ); 
     }
 }
 
@@ -65,10 +63,10 @@ int FindMedia(vector<int>& nums_first, vector<int>& nums_second) {
 int main() {
 	int first[] = {-1, 0, 2, 4};
     vector<int> nums_first(first, first + 4);
-	int second[] = {11, 3, 0, 5, 6};
-    vector<int> nums_second(second, second + 5);
+	int second[] = {11, 3, 0, 2, 6, 9};
+    vector<int> nums_second(second, second + 6);
  
-    int start = 0, end = 4;
+    int start = 0, end = 6;
     int k = 3;
     FindMaxKNum(nums_second, start , end, k);
     PrintVector(nums_second);
