@@ -70,7 +70,7 @@ int PartVector(vector<int>& nums) {
 }
 
 int PartVector(vector<int>& nums, int start, int end) {
-     int i = start, j = end;
+     int i = start, j = end -1;
      int base = nums[start];
      while (i < j) {
          cout << "i:" << i << ", j:" << j << endl;
