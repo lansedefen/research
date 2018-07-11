@@ -15,7 +15,7 @@ bool BinarySearch(vector<int>& arr, int start, int end, int val) {
 	             start = mid + 1;
 	     }
 	     mid = (start + end) /2;
-             cout << "start, end, mid:" << start << "," << end << "," << mid << endl;
+         cout << "start, end, mid:" << start << "," << end << "," << mid << endl;
      }
      return false;
 }
