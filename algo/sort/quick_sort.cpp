@@ -7,13 +7,13 @@
 using namespace std;
 
 void QuickSort(vector<int>& arr, int start, int end) {
-	if(start >= end) {
+	if(start >= end -1) {
 	   return;
 	}
 
     int middle = PartVector(arr, start, end);
     cout << "middle:" << middle << ", start:" << start << ", end:" << end << endl;
-	QuickSort(arr, start, middle-1);
+	QuickSort(arr, start, middle);
 	QuickSort(arr, middle + 1, end);
 }
 
@@ -53,7 +53,7 @@ int main() {
     vector<int > arr(tmp, tmp + 6);
     PrintVector(arr);
 
-    QuickSort(arr, 0, arr.size() - 1);
+    QuickSort(arr, 0, arr.size());
     PrintVector(arr);
     return -1;
 }
