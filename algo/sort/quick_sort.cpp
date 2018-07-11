@@ -40,12 +40,13 @@ ListNode* PartList(ListNode* head, ListNode* start, ListNode* end) {
 }
 
 void QuickSortList(ListNode* head, ListNode* start, ListNode* end) {
-    if(head == NULL) {
+    if(head == NULL || start == end) {
         return;
     }
+
     ListNode* middle = PartList(head, start, end);
     QuickSortList(head, start, middle);
-    
+    QuickSortList(head, middle->next, end);
 }
 
 int main() {
