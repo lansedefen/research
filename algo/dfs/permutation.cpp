@@ -1,14 +1,13 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include"../array/array_head.h"
 
 using namespace std;
 
 void pailie(vector<int>& input, vector<int>& label, vector<int>& res, int index) {
     if( res.size() == index) {
-        for (int j=0;j < res.size(); j++)
-            cout << res[j] << ",";
-        cout << endl;
+        PrintVector(res);
     }
 
     for(int i= 0; i < input.size(); i++){
@@ -22,31 +21,15 @@ void pailie(vector<int>& input, vector<int>& label, vector<int>& res, int index)
     }
 }
 
-void zuhe(vector<int>& input, vector<int>& label, int cur, vector<int>& res, int index) {
-    //cout << "index:" << index << endl;
-    if (res.size() <= index) {
-        for (int j=0;j < res.size(); j++) {
-             cout << res[j] << ",";
-        }
-        cout << endl;
+void zuhe(vector<int>& input, int cur, vector<int>& res, int index) {
+    if (res.size() == index) {
+        PrintVector(res);
     }
 
     for (int i = cur; i< input.size(); i++) {
-        int max_label = -1;
-        for (int j = label.size()-1;j>=0;j--) {
-            if(label[j] == 1) {
-                max_label = j;
-                break;
-            }
-        }
-
-        //if (i > max_label) {
             res.push_back(input[i]);
-            label[i] = 1;
-            zuhe(input, label, cur+1, res, index);
-            label[i] = 0;
+            zuhe(input, cur+1, res, index);
             res.pop_back();
-        //}
     }
 }
 
@@ -98,11 +81,10 @@ void FindPath(vector<vector<int> >& matrix, vector<vector<int> >& label, vector<
 int main() {
     int nums[] = {1,2,3,4,5};
     vector<int> input(nums, nums+5);
-    vector<int> label(5, 0);
     vector<int> res;
     int index = 5;
     //pailie(input, label, res, index);
-    zuhe(input, label, 0, res, 2);
+    zuhe(input, 0, res, 3);
 
     /*
     vector<vector<int> > matrix(4, vector<int>(4, 0));
