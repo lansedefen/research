@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void pailie(vector<int>& input,vector<int>& label, vector<int>& res, int index) {
+void pailie(vector<int>& input, vector<int>& label, vector<int>& res, int index) {
     if( res.size() == index) {
         for (int j=0;j < res.size(); j++)
             cout << res[j] << ",";
@@ -22,7 +22,7 @@ void pailie(vector<int>& input,vector<int>& label, vector<int>& res, int index) 
     }
 }
 
-void zuhe(vector<int>& input, vector<int>& label, vector<int>& res, int index) {
+void zuhe(vector<int>& input, vector<int>& label, int cur, vector<int>& res, int index) {
     //cout << "index:" << index << endl;
     if (res.size() <= index) {
         for (int j=0;j < res.size(); j++) {
@@ -31,7 +31,7 @@ void zuhe(vector<int>& input, vector<int>& label, vector<int>& res, int index) {
         cout << endl;
     }
 
-    for (int i = 0; i< input.size(); i++) {
+    for (int i = cur; i< input.size(); i++) {
         int max_label = -1;
         for (int j = label.size()-1;j>=0;j--) {
             if(label[j] == 1) {
@@ -40,13 +40,13 @@ void zuhe(vector<int>& input, vector<int>& label, vector<int>& res, int index) {
             }
         }
 
-        if (i > max_label) {
+        //if (i > max_label) {
             res.push_back(input[i]);
             label[i] = 1;
-            zuhe(input, label, res, index);
+            zuhe(input, label, cur+1, res, index);
             label[i] = 0;
             res.pop_back();
-        }
+        //}
     }
 }
 
@@ -102,7 +102,7 @@ int main() {
     vector<int> res;
     int index = 5;
     //pailie(input, label, res, index);
-    zuhe(input, label, res, 2);
+    zuhe(input, label, 0, res, 2);
 
     /*
     vector<vector<int> > matrix(4, vector<int>(4, 0));
