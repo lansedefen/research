@@ -1,3 +1,6 @@
+#ifndef LIST_HEAD_H_                                                
+#define LIST_HEAD_H_   
+
 #include<iostream>
 
 using namespace std;
@@ -48,9 +51,11 @@ ListNode* GetListMiddle(ListNode* head) {
 
     ListNode* fast = head;
     ListNode* slow = head;
-    while(fast && fast->next) {
+    while(fast && fast->next && fast->next->next) {
         fast = fast->next ->next;
         slow = slow->next;
     }
     return slow;
 }
+
+#endif
