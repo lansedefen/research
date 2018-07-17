@@ -6,6 +6,38 @@
 
 using namespace std;
 
+void InsertHeapElement(vector<int>& heap, int value) {
+    heap.push_back(value);
+    int i = heap.size();
+    cout << i << endl;
+    while(i >0) {
+       if ((i-1)/2 > 0 && heap[i] < heap[(i-1)/2]) {
+           int tmp = heap[i];
+           heap[i] = heap[(i-1)/2];
+           heap[(i-1)/2] = tmp;
+       }
+       i = (i-1)/2;
+    }
+}
+
+int DeleteHeap(vector<int>& heap) {
+    int value = heap[0];
+    heap[0] = value;
+    heap.pop();
+
+    int i = heap.size();
+    cout << i << endl;
+    while(i >0) {
+       if ((i-1)/2 > 0 && heap[i] < heap[(i-1)/2]) {
+           int tmp = heap[i];
+           heap[i] = heap[(i-1)/2];
+           heap[(i-1)/2] = tmp;
+       }
+       i = (i-1)/2;
+    }
+    return value;
+}
+
 void adjust(vector<int>& heap, int index, int value) {
       int len = heap.size();
       heap[index] = value;
@@ -34,20 +66,6 @@ void adjust(vector<int>& heap, int index, int value) {
          heap[i] = tmp;
          i = min_index;
       }
-}
-
-void insert(vector<int>& heap, int value) {
-    heap.push_back(value);
-    int i = heap.size();
-    cout << i << endl;
-    while(i >0) {
-       if ((i-1)/2 > 0 && heap[i] < heap[(i-1)/2]) {
-           int tmp = heap[i];
-           heap[i] = heap[(i-1)/2];
-           heap[(i-1)/2] = tmp;
-       }
-       i = (i-1)/2;
-    }
 }
 
 void build(vector<int>& heap) {
