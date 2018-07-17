@@ -5,19 +5,28 @@
 
 using namespace std;
 
-ListNode*& removeNode1(ListNode *p) {
-    cout << p->value <<endl;
-    ListNode*& q = p->next;
-    //q = p->next->next;
-    return q; 
+void move(ListNode* &p) {
+    p = p->next;
+}
 
-    /*
-    if(p->next != NULL) {
-        q = p;
-        p = p->next;
-        cout << p -> value << endl;
-        delete q;
-    }*/
+void RemoveNode2(ListNode* &p, int value) {
+    if (!p) {
+        return;
+    }
+
+    if (p->value == value) {
+        move(p);
+        return;
+    }
+
+    ListNode* q = p;
+    while(q) {
+        if(q->next->value == value ) {
+                move(q->next);
+                break;
+        } 
+        q = q->next;
+    }
 }
 
 int main() {
@@ -26,8 +35,8 @@ int main() {
     ListNode* head;
     CreateList(&head, input_array);
     PrintList(head);
-    ListNode*& q = removeNode1(head);
-    q = q->next;
+    RemoveNode2(head, 2);
+
     PrintList(head);
 
     /*ListNode* end = GetListEnd(head);
