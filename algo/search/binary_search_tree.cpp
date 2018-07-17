@@ -57,18 +57,33 @@ void DeleteNode(TreeNode* &p) {
      }
 }
 
-void Remove2(TreeNode* root, int target) {
-    TreeNode** t= &root; 
-    if(*t) {
-        int tmp = (*t)->value;
-        if(target < tmp) {
-            *t = (*t)->left;
+void Remove2(TreeNode* &root, int target) {
+	if(!root) {
+		return;
+	}
+
+	int value = root->value;
+	if (value  == target) {
+		return DeleteNode(root);
+	}
+
+    TreeNode* t = root; 
+	TreeNode* q = t;
+    while(t) {
+		value = t->value;
+		cout << "value:" << value << endl;
+		if (value == target) {
+			cout << "q:" << q -> value << endl;
+            DeleteNode(q);
+			return;
+		}
+
+		q = t;
+        if(target < value) {
+            t = t->left;
         }
-        else if(target > tmp) {
-            *t = (*t) -> right;
-        }
-        else {
-            DeleteNode(t);
+        else if(target > value) {
+            t = t -> right;
         }
     }
 }
@@ -111,13 +126,12 @@ int main() {
     InsertBinaryTree(root, 3);
     InsertBinaryTree(root, 6);
     InsertBinaryTree(root, 2);
-    InsertBinaryTree(root, 2);
     InsertBinaryTree(root, 4);
     InsertBinaryTree(root, 1);
     PrintTree(root);
 
     TreeNode* new_root = root;
-    Remove2(new_root, 5);
+    Remove2(new_root, 3);
     PrintTree(new_root);
     return -1;
 }
