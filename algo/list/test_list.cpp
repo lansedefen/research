@@ -5,15 +5,19 @@
 
 using namespace std;
 
-void removeNode1(ListNode *p) {
+ListNode*& removeNode1(ListNode *p) {
     cout << p->value <<endl;
-    ListNode *q = NULL;
+    ListNode*& q = p->next;
+    //q = p->next->next;
+    return q; 
+
+    /*
     if(p->next != NULL) {
         q = p;
         p = p->next;
         cout << p -> value << endl;
         delete q;
-    }
+    }*/
 }
 
 int main() {
@@ -22,7 +26,8 @@ int main() {
     ListNode* head;
     CreateList(&head, input_array);
     PrintList(head);
-    removeNode1(head);
+    ListNode*& q = removeNode1(head);
+    q = q->next;
     PrintList(head);
 
     /*ListNode* end = GetListEnd(head);
