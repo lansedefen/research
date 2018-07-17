@@ -1,30 +1,19 @@
 #include<iostream>
 #include<vector>
 #include<queue>
+#include"../tree/tree_head.h"
 
 using namespace std;
 
-class Node {
-  public:
-      int val;
-      Node* left;
-      Node* right;
-      Node(int val) {
-          this->val = val;
-          this->left = NULL;
-          this->right = NULL;
-      };
-};
-
-bool search(Node* root, int val, Node** p) {
+bool SearchBinaryTree(TreeNode* root, int target, TreeNode* &p) {
      while(root) {
-         int tmp = root->val;
-         if(tmp == val) {
+         int tmp = root->value;
+         if(tmp == target) {
             return true;
          }
 
-         *p = root;
-         if (val < tmp) {
+         p = root;
+         if (target < tmp) {
             root = root->left;
          }
          else {
@@ -34,11 +23,11 @@ bool search(Node* root, int val, Node** p) {
      return false;
 }
 
-void inseart(Node* root, int val) {
-     Node* p = NULL;
-     if(!search(root, val, &p)) {
-         Node* tmp = new Node(val);
-         if (p->val > val) {
+void InsertBinaryTree(TreeNode* root, int val) {
+     TreeNode* p = NULL;
+     if(!SearchBinaryTree(root, val, p)) {
+         TreeNode* tmp = new TreeNode(val);
+         if (p->value > val) {
             p->left = tmp;
          }
          else {
@@ -47,79 +36,89 @@ void inseart(Node* root, int val) {
      }
 }
 
-void delete_node(Node*& p) {
-     cout << "delete Node:" << p->val << endl;
-     Node* q = p;
+void DeleteNode(TreeNode* &p) {
+     cout << "delete TreeNode:" << p->value << endl;
+
+     TreeNode* q = p;
      if (!p->left) {
-	p = p->left;
-	delete q;
+	     p = p->left;
+	     delete q;
      } else if(!p->right)  {
-	p = p->right;
-	delete q;
+	     p = p->right;
+	     delete q;
      } 
      else {
-      Node* s = p->left;
-      while(s->right) {
+        TreeNode* s = p->left;
+        while(s->right) {
 	      s = s->right;
-      }
-      s->right = p->right;
-      p = p->left;
+        }
+        s->right = p->right;
+        p = p->left;
      }
 }
 
-void tree_delete(Node*& root, int val) {
-     if(root) {
-        if(root-> val == val) {
-             delete_node(root);
+void Remove2(TreeNode* root, int target) {
+    TreeNode** t= &root; 
+    if(*t) {
+        int tmp = (*t)->value;
+        if(target < tmp) {
+            *t = (*t)->left;
         }
-        else if (root-> val < val) {
-             tree_delete(root->left, val);
+        else if(target > tmp) {
+            *t = (*t) -> right;
         }
         else {
-             tree_delete(root->right, val);
+            DeleteNode(t);
         }
-     }
-     return;
+    }
 }
 
-void print_tree(Node* root) {
-     queue<Node*> tmp;
-     tmp.push(root);
-     int first=1;
-     int second = 0;
-     while(!tmp.empty()) {
-        Node* top_node = tmp.front();
-        tmp.pop();
-        first -=1;
-        cout << top_node->val;
-
-        if(top_node->left) {
-           tmp.push(top_node->left);
-           second +=1;
+void Remove3(TreeNode* root, int target) {
+    TreeNode* t= root; 
+    TreeNode* q= NULL; 
+    if(t) {
+        int tmp = t->value;
+        q = t;
+        if(target < tmp) {
+            t = t->left;
         }
-
-        if(top_node->right) {
-           tmp.push(top_node->right);
-           second +=1;
+        else if(target > tmp) {
+            t = t -> right;
         }
-
-        if(first == 0) {
-          cout << "----------" << first << "," << second << endl;
-          first = second;
-          second = 0;
+        else {
+            DeleteNode(t);
         }
-     }
+    }
+}
+
+void Remove(TreeNode* &t, int target) {
+    if(t) {
+        if(target < t-> value) {
+            Remove(t->left, target);
+        }
+        else if(target > t-> value)
+        {
+            Remove(t->right, target);
+        }
+        else {
+            DeleteNode(t);
+        }
+    }
 }
 
 int main() {
-    Node* root = new Node(5);
-    inseart(root, 3);
-    inseart(root, 6);
-    inseart(root, 2);
-    inseart(root, 2);
-    inseart(root, 4);
-    inseart(root, 1);
-    print_tree(root);
-    tree_delete(root, 5);
-    print_tree(root);
+    TreeNode* root = new TreeNode(5);
+    InsertBinaryTree(root, 3);
+    InsertBinaryTree(root, 6);
+    InsertBinaryTree(root, 2);
+    InsertBinaryTree(root, 2);
+    InsertBinaryTree(root, 4);
+    InsertBinaryTree(root, 1);
+    PrintTree(root);
+
+    TreeNode* new_root = root;
+    Remove2(new_root, 5);
+    PrintTree(new_root);
+    return -1;
 }
+
