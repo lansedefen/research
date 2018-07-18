@@ -74,7 +74,11 @@ void Remove2(TreeNode* &root, int target) {
 		cout << "value:" << value << endl;
 		if (value == target) {
 			cout << "q:" << q -> value << endl;
-            DeleteNode(q);
+            if ( q->value > target) {
+                DeleteNode(q->left);
+            } else {
+                DeleteNode(q->right);
+            }
 			return;
 		}
 
@@ -84,24 +88,6 @@ void Remove2(TreeNode* &root, int target) {
         }
         else if(target > value) {
             t = t -> right;
-        }
-    }
-}
-
-void Remove3(TreeNode* root, int target) {
-    TreeNode* t= root; 
-    TreeNode* q= NULL; 
-    if(t) {
-        int tmp = t->value;
-        q = t;
-        if(target < tmp) {
-            t = t->left;
-        }
-        else if(target > tmp) {
-            t = t -> right;
-        }
-        else {
-            DeleteNode(t);
         }
     }
 }
@@ -131,7 +117,7 @@ int main() {
     PrintTree(root);
 
     TreeNode* new_root = root;
-    Remove2(new_root, 3);
+    Remove2(new_root, 5);
     PrintTree(new_root);
     return -1;
 }
