@@ -33,17 +33,27 @@ void DeleteListNode(ListNode* &p, int value) {
 }
 
 ListNode* PartList(ListNode* start, ListNode* end) {
-    /*ListNode* index = start;
+    ListNode* index = start;
     int base = start->value;
-    while(start != end) {
-        if(start->value < value) {
-            
-        }
 
-        cout << start-> value << ", ";
-        start = start->next;
-    }*/
-    return start;
+    ListNode* smaller = NULL;
+    ListNode* bigger = NULL;
+    while(start != end) {
+        ListNode* q = start;
+        start = start -> next;
+
+        if(q->value <= base) {
+            q->next = smaller;
+            smaller = q;
+        } else {
+            q->next = bigger;
+            bigger = q;
+        }
+        //cout << start-> value << ", ";
+    }
+
+    index ->next = bigger;
+    return smaller;
 }
 
 #endif
