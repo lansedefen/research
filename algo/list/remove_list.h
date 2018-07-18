@@ -12,7 +12,7 @@ void move(ListNode* &p) {
     p = p->next;
 }
 
-void RemoveNode(ListNode* &p, int value) {
+void DeleteListNode(ListNode* &p, int value) {
     if (!p) {
         return;
     }
