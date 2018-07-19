@@ -59,7 +59,6 @@ int DeleteHeap(vector<int>& heap, int& value) {
     return value;
 }
 
-
 void BuildHeap(vector<int>& heap) {
    int len = heap.size();
     for (int i = len/2; i--; i>=0) {
@@ -68,17 +67,13 @@ void BuildHeap(vector<int>& heap) {
 }
 
 int main() {
-    // 2 build log(n)
-    vector<int> heap;
-    heap.push_back(3);
-    heap.push_back(6);
-    heap.push_back(1);
-    heap.push_back(8);
+    int nums[] = {3,6,1,8,9};
+    vector<int> heap(nums, nums + 5);
     BuildHeap(heap); 
-    cout << "----" << endl;
-    for (int i=0; i< heap.size(); i++) {
-        cout << heap[i] << endl;
-    }
+    PrintVector(heap, "before");    
+
+    AdjustHeap(heap, 0, 10);
+    PrintVector(heap, "after");    
 
     return -1;
 }
