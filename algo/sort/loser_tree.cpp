@@ -8,10 +8,10 @@ void adjust(vector<int>& loster_tree, vector<int>& leaves, int i, int K) {
      int parent = (K + i) /2;
      while (parent >0) {
 	 if( leaves[i] > leaves[loster_tree[parent]] ) {
-             int tmp = loster_tree[parent];
-	     loster_tree[parent] = i;
-	     i = tmp;
-	 }
+            int tmp = loster_tree[parent];
+	        loster_tree[parent] = i;
+	        i = tmp;
+	     }
          parent = parent /2;
      } 
      loster_tree[0] = i; 
