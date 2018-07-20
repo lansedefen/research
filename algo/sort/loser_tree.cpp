@@ -1,45 +1,38 @@
 #include<iostream>
 #include<vector>
 #include<stdlib.h>
+#include"../array/array_head.h"
 
 using namespace std;
 
-void adjust(vector<int>& loster_tree, vector<int>& leaves, int i, int K) {
-     int parent = (K + i) /2;
+int adjust(vector<int>& loster_tree, vector<int>& leaves, int i) {
+     int K = leaves.size();
+     int parent = (K -2 + i) /2;
+     
      while (parent >0) {
-	 if( leaves[i] > leaves[loster_tree[parent]] ) {
-            int tmp = loster_tree[parent];
-	        loster_tree[parent] = i;
-	        i = tmp;
+	    if( leaves[i] > leaves[loster_tree[parent]] ) {
+            swap(loster_tree[parent], i);
 	     }
          parent = parent /2;
      } 
-     loster_tree[0] = i; 
+     loster_tree[K-1] = i;
+     return -1;
 }
 
-void build(vector<int>& loster_tree, vector<int>& leaves, int K) {
+void build(vector<int>& loster_tree, vector<int>& leaves) {
+    int K = leaves.size();
+    loster_tree.resize(K);
     for (int i= K-1; i>=0; i--) {
-	    adjust(loster_tree, leaves, i, K);
+	    adjust(loster_tree, leaves, i);
     } 
 }
 
 int main() {
-    int K = 5;
-    const int MINKEY = -1000;
-    vector<int> loster_tree(K);
-    vector<int> leaves(K+1);
-    cout << "K:" <<  K << endl;
-    // leaves, 0~K-1 存放K路排序数，K存放初始化最小值
-    // loster_tree, 1~K-1 存放失败者，0 存放冠军
-    leaves[K] = MINKEY;
-    for (int i = 0;i < K; i++) {
-        leaves[i] = rand() % 10 ;
-	cout << "init leaves:" << i << " value:"<< leaves[i] << endl;
-	loster_tree[i] = K;
-    }
-    // 
-    build(loster_tree, leaves, K);
-    for (int i = 0;i < K; i++) {
-	cout << "build loster_trees:" << i << " value:"<< loster_tree[i] << endl;
-    }
+    int nums[] = {3,6,1,8,9};
+    vector<int> leaves(nums, nums + 5);
+    vector<int> loster_tree;
+    build(loster_tree, leaves);
+    PrintVector(leaves);
+    PrintVector(loster_tree);
+    return -1;
 }
