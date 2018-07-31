@@ -1,21 +1,30 @@
+#ifndef RETOTE_LIST_H_
+#define RETOTE_LIST_H_
+
 #include<vector>
 #include"list_head.h"
 
 ListNode* RotateList(ListNode* head, int n) {
-    if(!head) return head;
+    if(!head || n ==0) return head;
  
-    ListNode new_head = NULL;
-    ListNode p = head;
-    int i=0;
-    while(!p && i< n-1) {
-        new_head = p->next;
+    ListNode* p = head;
+    int len= 1;
+    while(p->next) {
         p = p ->next;
-        i++;
+        len++;
     }
+	n = len - n % len;
 
-    while(!p->next) {
+	p->next = head; 
+	int step = 0;
+    while(step < n) {
         p = p -> next;
+		step ++;
     }
-    p->next = head;
-    return new_head;
+    head = p->next;
+	p->next = NULL;
+    return head;
 }
+
+
+#endif
