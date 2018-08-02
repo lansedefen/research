@@ -1,5 +1,5 @@
-#ifndef REMOVE_LIST_H_                                                
-#define REOMOVE_LIST_H_ 
+#ifndef MOVE_LIST_H_                                                
+#define MOVE_LIST_H_ 
 
 
 #include<iostream>
