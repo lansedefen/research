@@ -8,10 +8,12 @@ using namespace std;
 struct word_state {
     string word;
     int level;
+
     word_state() {
         word = "";
         level = 0;
     }
+
     word_state(const string& word, int level) {
         this->word = word;
         this->level = level;
@@ -20,12 +22,35 @@ struct word_state {
     bool operator==(const word_state& other) const {
         return this->word == other.word;
     } 
+};
+
+template<> struct hash<word_state> {
+    public:
+        int operator()(const word_state& s) const {
+            return str_hash(s.word);
+        }
+    private:
+        std::hash<std::string> str_hash;
+};
+
+int extend_statue(word_statue& node, unordered_set<word_state>& visited, unordered_set<string>& dict, unordered_set<word_state>& new_node) {
+    for (int i =0;i < node.word.size(); i++) {
+        string s = node.word;
+        for (char c = 'a'; c < 'z' ;c++) {
+            if (c == s[i]) 
+                continue;
+            swap(c, s[i]);
+            word_state tmp(s);
+            if (dict.find(s) != dict.end() && visited.find(tmp) == visited.end() ) {
+                new_node.insert(tmp);
+            }
+            swap(c, s[i]);
+        }
+    }
 }
 
-
-
 int LadderLen(const string& start, const string& end, const unordered_set<string>& dict) {
-    queue<word_statue> q;
+    queue<word_state> q;
     unordered_set<word_state> visited;
 
     word_state start_node(start, 0);
@@ -39,10 +64,11 @@ int LadderLen(const string& start, const string& end, const unordered_set<string
             return node.level + 1;
         }
         
-        vector<word_state> new_node = extend_statue(node);
-        for(int i =0 ;i< new_node.size();i++) {
-            q.push(new_node[i]);
-            visited.insert(new_node[i]);
+        unordered_set<word_state> new_node;
+        extend_statue(node, visited, dict, new_node);
+        for(unordered_set<word_state>::iterator it = new_node.begin() ; it != new_node.end(); it++) {
+            q.push(*it);
+            visited.insert(*it);
         }
     }
     return 0;
