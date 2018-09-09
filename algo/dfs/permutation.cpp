@@ -2,6 +2,7 @@
 #include<vector>
 #include<string>
 #include"../array/array_head.h"
+#include<map>
 
 using namespace std;
 
@@ -28,7 +29,7 @@ void zuhe(vector<int>& input, int cur, vector<int>& res, int index) {
 
     for (int i = cur; i< input.size(); i++) {
             res.push_back(input[i]);
-            zuhe(input, cur+1, res, index);
+            zuhe(input, cur + 1, res, index);
             res.pop_back();
     }
 }
@@ -78,13 +79,40 @@ void FindPath(vector<vector<int> >& matrix, vector<vector<int> >& label, vector<
     }
 }
 
+void GenPath(map<int, vector<int> >& input, vector<int>& res, int start) {
+    if (res.size() != 0) {
+        PrintVector(res);
+    }
+
+    for (vector<int>::iterator it = input[start].begin(); it != input[start].end(); it++) {
+            res.push_back(*it);
+            GenPath(input, res, *it);
+            res.pop_back();
+    }
+}
+
 int main() {
-    int nums[] = {1,2,3,4,5};
-    vector<int> input(nums, nums+5);
+    int nums[] = {2,3,4};
+    vector<int> tmp(nums, nums+3);
+
+    int nums2[] = {5,6};
+    vector<int> tmp2(nums2, nums2+2);
+
+    int nums3[] = {6,7};
+    vector<int> tmp3(nums3, nums3+2);
+
+    map<int, vector<int> > input;
+    input[1] = tmp;
+    input[2] = tmp2;
+    input[3] = tmp3;
+
     vector<int> res;
-    int index = 5;
+    res.push_back(1);
+    GenPath(input, res, 1);
+
+    //int index = 5;
     //pailie(input, label, res, index);
-    zuhe(input, 0, res, 3);
+    //zuhe(input, 0, res, 3);
 
     /*
     vector<vector<int> > matrix(4, vector<int>(4, 0));
