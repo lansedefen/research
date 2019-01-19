@@ -1,0 +1,13 @@
+11746:C 11 Nov 2018 11:01:17.220 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+11746:C 11 Nov 2018 11:01:17.220 # Redis version=5.0.0, bits=64, commit=91fbdf67, modified=1, pid=11746, just started
+11746:C 11 Nov 2018 11:01:17.220 # Warning: no config file specified, using the default config. In order to specify a config file use src/redis-server /path/to/redis.conf
+11746:M 11 Nov 2018 11:01:17.221 * Increased maximum number of open files to 10032 (it was originally set to 7168).
+11746:M 11 Nov 2018 11:01:17.223 * Running mode=standalone, port=6379.
+11746:M 11 Nov 2018 11:01:17.223 # Server initialized
+11746:M 11 Nov 2018 11:01:17.223 * DB loaded from disk: 0.000 seconds
+11746:M 11 Nov 2018 11:01:17.223 * Ready to accept connections
+11746:signal-handler (1541905363) Received SIGTERM scheduling shutdown...
+11746:M 11 Nov 2018 11:02:43.499 # User requested shutdown...
+11746:M 11 Nov 2018 11:02:43.499 * Saving the final RDB snapshot before exiting.
+11746:M 11 Nov 2018 11:02:43.505 * DB saved on disk
+11746:M 11 Nov 2018 11:02:43.505 # Redis is now ready to exit, bye bye...
